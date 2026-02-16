@@ -1,0 +1,187 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* TG Ads Marketplace - Modern Dark Theme Design System */
+
+* {
+  outline: none;
+}
+
+@layer base {
+  :root {
+    /* Dark theme - Deep space palette */
+    --background: 230 25% 5%;
+    --background-secondary: 230 20% 8%;
+    --background-tertiary: 230 18% 12%;
+    
+    --foreground: 0 0% 98%;
+    --foreground-muted: 230 10% 60%;
+    --foreground-subtle: 230 10% 40%;
+
+    /* Cards and surfaces with glass effect */
+    --card: 230 20% 10%;
+    --card-hover: 230 18% 14%;
+    --card-foreground: 0 0% 98%;
+    --card-glow: 230 100% 70%;
+
+    --popover: 230 20% 10%;
+    --popover-foreground: 0 0% 98%;
+
+    /* Primary - Telegram Blue */
+    --primary: 200 85% 55%;
+    --primary-hover: 200 85% 48%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 200 85% 55%;
+
+    /* Secondary */
+    --secondary: 230 18% 15%;
+    --secondary-hover: 230 18% 20%;
+    --secondary-foreground: 0 0% 98%;
+
+    /* Muted */
+    --muted: 230 15% 15%;
+    --muted-foreground: 230 10% 55%;
+
+    /* Accent - Lighter blue */
+    --accent: 205 90% 60%;
+    --accent-foreground: 0 0% 100%;
+
+    /* Status colors */
+    --status-pending: 42 100% 55%;
+    --status-pending-bg: 42 100% 12%;
+    --status-success: 158 70% 45%;
+    --status-success-bg: 158 70% 10%;
+    --status-error: 0 80% 58%;
+    --status-error-bg: 0 80% 12%;
+    --status-neutral: 230 10% 50%;
+    --status-neutral-bg: 230 10% 15%;
+
+    /* Borders and inputs */
+    --border: 230 15% 18%;
+    --border-hover: 230 15% 25%;
+    --input: 230 18% 12%;
+    --input-focus: 175 90% 50%;
+    --ring: 175 90% 50%;
+
+    /* Misc */
+    --destructive: 0 80% 58%;
+    --destructive-foreground: 0 0% 98%;
+    --radius: 1rem;
+
+    /* Verified badge */
+    --verified: 210 100% 55%;
+
+    /* Gradient accents */
+    --gradient-primary: linear-gradient(135deg, hsl(200 85% 55%), hsl(210 85% 50%));
+    --gradient-accent: linear-gradient(135deg, hsl(200 85% 55%), hsl(195 90% 60%));
+    --gradient-card: linear-gradient(135deg, hsl(230 20% 12%), hsl(230 20% 8%));
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+@layer components {
+  /* Touch-friendly tap targets */
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px];
+  }
+
+  /* Modern glass card */
+  .card-surface {
+    @apply bg-gradient-to-br from-card to-background-secondary rounded-2xl border border-white/5 shadow-lg;
+  }
+
+  .card-surface-hover {
+    @apply bg-gradient-to-br from-card to-background-secondary rounded-2xl border border-white/5 shadow-lg transition-all duration-300 hover:border-white/10 hover:shadow-xl hover:scale-[1.01];
+  }
+
+  /* Glass effect */
+  .glass {
+    @apply bg-background-secondary/60 backdrop-blur-xl border border-white/5;
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent;
+  }
+
+  /* Primary glow effect */
+  .primary-glow {
+    box-shadow: 0 0 30px hsl(var(--primary-glow) / 0.35), 0 0 60px hsl(var(--primary-glow) / 0.15);
+  }
+
+  /* Status badges */
+  .badge-pending {
+    @apply bg-[hsl(var(--status-pending-bg))] text-[hsl(var(--status-pending))] border border-[hsl(var(--status-pending)/0.2)];
+  }
+
+  .badge-success {
+    @apply bg-[hsl(var(--status-success-bg))] text-[hsl(var(--status-success))] border border-[hsl(var(--status-success)/0.2)];
+  }
+
+  .badge-error {
+    @apply bg-[hsl(var(--status-error-bg))] text-[hsl(var(--status-error))] border border-[hsl(var(--status-error)/0.2)];
+  }
+
+  .badge-neutral {
+    @apply bg-[hsl(var(--status-neutral-bg))] text-[hsl(var(--status-neutral))] border border-[hsl(var(--status-neutral)/0.2)];
+  }
+
+  /* Skeleton loader */
+  .skeleton {
+    @apply animate-pulse bg-gradient-to-r from-muted via-muted/50 to-muted bg-[length:200%_100%] rounded-xl;
+  }
+
+  /* Sticky bottom container - only used if needed for special cases */
+  .sticky-bottom {
+    @apply p-4 pt-2;
+  }
+
+  /* Shimmer effect */
+  .shimmer {
+    background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.1), transparent);
+    animation: shimmer 2s infinite;
+  }
+
+  @keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+
+  @keyframes slide-down {
+    0% { opacity: 0; transform: translateY(-12px) scale(0.97); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .animate-slide-down {
+    animation: slide-down 0.25s ease-out;
+  }
+}
+
+@layer utilities {
+  /* Hide scrollbar */
+  .no-scrollbar::-webkit-scrollbar,
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar,
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Safe area padding */
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+}
