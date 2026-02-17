@@ -2,8 +2,7 @@
 
 A **Telegram Mini App** for managing ad deals between **Advertisers** and **Publishers**.
 
-**Repository:**  
-https://github.com/xMiHiR13/ad-marketplace  
+**Demo Bot:** https://t.me/TgAdMarketplaceBot  
 
 **License:** GNU General Public License (GPL)
 
