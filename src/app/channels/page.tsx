@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import ChannelsList from "./ChannelsClient";
 import ChannelDetail from "@/components/channel/ChannelDetail";
 

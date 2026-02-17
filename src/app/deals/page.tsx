@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import DealsList from "./DealsClient";
 import DealDetail from "@/components/deal/DealDetail";
 

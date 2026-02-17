@@ -78,7 +78,11 @@ export default function CampaignDetail({ campaignId }: CampaignDetailProps) {
       const res = await fetch(`/api/campaigns/${campaignId}`, {
         method: "DELETE",
       });
-      if (!res.ok) throw new Error("Failed to delete campaign");
+      const data = await res.json();
+      if (!res.ok)
+        throw new Error(
+          data.error || data.message || "Failed to delete campaign",
+        );
       return campaignId;
     },
     onSuccess: (deletedId) => {
@@ -103,21 +107,32 @@ export default function CampaignDetail({ campaignId }: CampaignDetailProps) {
       toast.success("Campaign deleted");
       router.push("/?tab=campaigns");
     },
+    onError: (err: any) =>
+      toast.error(err.error || err.message || "Failed to delete campaign"),
   });
 
   const requestDealMutation = useMutation<any, any, RequestDealInput>({
-    mutationFn: ({ campaignId, channelId, adType }) =>
-      fetch("/api/deals", {
+    mutationFn: async ({ campaignId, channelId, adType }) => {
+      const res = await fetch("/api/deals", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ campaignId, channelId, adType }),
-      }).then((res) => res.json()),
+      });
+      const data = await res.json();
+      if (!res.ok)
+        throw new Error(
+          data.error || data.message || "Failed to initialize deal",
+        );
+      return;
+    },
     onSuccess: (data) => {
       toast.success("Deal requested");
       if (data.id) {
         router.push(buildDealUrl(data.id));
       }
     },
+    onError: (err: any) =>
+      toast.error(err.error || err.message || "Failed to initialize deal"),
   });
 
   useDocumentTitle(
@@ -164,7 +179,9 @@ export default function CampaignDetail({ campaignId }: CampaignDetailProps) {
   }, [campaign, showPostViews, showStoryViews]);
 
   if (isLoading) {
-    return <CampaignDetailSkeleton isFullscreen={telegram?.isFullscreen ?? false} />;
+    return (
+      <CampaignDetailSkeleton isFullscreen={telegram?.isFullscreen ?? false} />
+    );
   }
 
   if (error || !campaign) {
@@ -187,7 +204,9 @@ export default function CampaignDetail({ campaignId }: CampaignDetailProps) {
   return (
     <div className="min-h-screen bg-background pb-28">
       {/* Header */}
-      <header className={`sticky top-0 z-40 bg-background/80 backdrop-blur-lg border-b border-border ${telegram?.isFullscreen ? "pt-20" : ""}`}>
+      <header
+        className={`sticky top-0 z-40 bg-background/80 backdrop-blur-lg border-b border-border ${telegram?.isFullscreen ? "pt-20" : ""}`}
+      >
         <div className="px-4 py-3 flex items-center gap-3">
           <button
             onClick={() => router.back()}

@@ -1,18 +1,17 @@
 "use client";
 
+import Image from "next/image";
 import TonPrice from "@/components/shared/TonPrice";
 
 import { useRouter } from "next/navigation";
 import { formatNumber } from "@/lib/formatters";
 import { buildChannelUrl } from "@/lib/navigation";
 import { Button } from "@/components/shared/Button";
-import { useTonPrice, FALLBACK_TON_USD_RATE } from "@/hooks/useTonPrice";
 import {
   PRICING_LABELS,
   ChannelPricing,
   ChannelCardType,
 } from "@/types/channel";
-import Image from "next/image";
 
 interface ChannelCardProps {
   data: ChannelCardType;
@@ -28,8 +27,6 @@ const PRICING_COLORS: Record<keyof ChannelPricing, string> = {
 
 export function ChannelCard({ data: channel }: ChannelCardProps) {
   const router = useRouter();
-  const { data: tonPrice } = useTonPrice();
-  const usdRate = tonPrice ?? FALLBACK_TON_USD_RATE;
 
   const notificationPercent = Math.round(
     (channel.stats.enabledNotifications.part /
@@ -128,13 +125,12 @@ export function ChannelCard({ data: channel }: ChannelCardProps) {
       {/* Dynamic pricing badges with TON prices */}
       <div className="flex flex-wrap gap-1.5 mt-3">
         {pricingKeys.map((key) => {
-          const priceTon = Math.round(channel.pricing[key]! / usdRate);
           return (
             <span
               key={key}
               className={`inline-flex items-center gap-1 px-2 py-1 border rounded-lg text-[10px] font-medium ${PRICING_COLORS[key]}`}
             >
-              <TonPrice amount={priceTon} size="sm" /> · {PRICING_LABELS[key]}
+              <TonPrice amount={channel.pricing[key]!} size="sm" /> · {PRICING_LABELS[key]}
             </span>
           );
         })}

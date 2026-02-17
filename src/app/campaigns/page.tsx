@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import CampaignsList from "./CampaignsClient";
 import CampaignDetail from "@/components/campaign/CampaignDetail";
 

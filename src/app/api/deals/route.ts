@@ -49,6 +49,13 @@ export async function POST(req: Request) {
         { status: 400 },
       );
     }
+    
+    if (adType === "story") {
+      return NextResponse.json(
+        { error: `Story ad type is not supported yet.` },
+        { status: 400 },
+      );
+    }
 
     const isChannelOwner = channel.ownerId === userId;
     let dealData: any = {

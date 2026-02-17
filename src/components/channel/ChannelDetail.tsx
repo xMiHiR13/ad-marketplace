@@ -37,7 +37,11 @@ import { TonAddressPicker } from "@/components/channel/TonAddressPicker";
 import { useTonPrice, FALLBACK_TON_USD_RATE } from "@/hooks/useTonPrice";
 import { ViewsByHoursChart } from "@/components/channel/ViewsByHoursChart";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { formatNumber, formatDateISO, truncateAddressLong } from "@/lib/formatters";
+import {
+  formatNumber,
+  formatDateISO,
+  truncateAddressLong,
+} from "@/lib/formatters";
 import { PremiumSubscribersCard } from "@/components/channel/PremiumSubscribersCard";
 
 // Pricing badge colors
@@ -112,7 +116,7 @@ export default function ChannelDetail({ channelId }: ChannelDetailProps) {
         if (!old) return old;
         return old.filter((c) => c.chatId !== deletedChatId);
       });
-      
+
       // Update profile cache
       queryClient.setQueryData(["profile"], (old: any) => {
         if (!old) return old;
@@ -190,7 +194,9 @@ export default function ChannelDetail({ channelId }: ChannelDetailProps) {
   }, [selectedIndex]);
 
   if (isLoading) {
-    return <ChannelDetailSkeleton isFullscreen={telegram?.isFullscreen ?? false} />;
+    return (
+      <ChannelDetailSkeleton isFullscreen={telegram?.isFullscreen ?? false} />
+    );
   }
 
   if (error || !channel) {
@@ -288,7 +294,9 @@ export default function ChannelDetail({ channelId }: ChannelDetailProps) {
   return (
     <div className="min-h-screen bg-background pb-24">
       {/* Header */}
-      <header className={`sticky top-0 z-40 ${telegram?.isFullscreen ? "pt-20" : ""}`}>
+      <header
+        className={`sticky top-0 z-40 ${telegram?.isFullscreen ? "pt-20" : ""}`}
+      >
         <div className="absolute inset-0 bg-background/80 backdrop-blur-xl" />
         <div className="relative px-4 py-3 flex items-center gap-3 border-b border-white/5">
           <button
@@ -501,10 +509,12 @@ export default function ChannelDetail({ channelId }: ChannelDetailProps) {
         />
 
         {/* Language Distribution */}
-        <LanguageChart
-          data={channel.stats.languages}
-          totalSubscribers={channel.stats.followers.current}
-        />
+        {channel.stats.languages.length > 0 && (
+          <LanguageChart
+            data={channel.stats.languages}
+            totalSubscribers={channel.stats.followers.current}
+          />
+        )}
 
         {/* Managers Section - Owner only */}
         {isOwner && (

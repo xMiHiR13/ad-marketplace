@@ -397,7 +397,9 @@ export default function ListChannel() {
 
   return (
     <div className="min-h-screen bg-background pb-24">
-      <header className={`sticky top-0 z-40 ${telegram?.isFullscreen ? "pt-20" : ""}`}>
+      <header
+        className={`sticky top-0 z-40 ${telegram?.isFullscreen ? "pt-20" : ""}`}
+      >
         <div className="absolute inset-0 bg-background/80 backdrop-blur-xl" />
         <div className="relative px-4 py-3 border-b border-white/5 flex items-center gap-3">
           <button
@@ -791,10 +793,12 @@ export default function ListChannel() {
                 />
 
                 {/* Language Distribution */}
-                <LanguageChart
-                  data={channelStats.languages}
-                  totalSubscribers={channelStats.followers.current}
-                />
+                {channelStats.languages.length > 0 && (
+                  <LanguageChart
+                    data={channelStats.languages}
+                    totalSubscribers={channelStats.followers.current}
+                  />
+                )}
 
                 {/* Managers Section - Owner is always the current user when listing */}
                 {fetchedChannel && (
